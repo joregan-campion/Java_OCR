@@ -29,33 +29,33 @@ public class ScannedImageData {
 
     static FilePath filePathObject = new FilePath(true);   //true
     private static Statement mStatment;
+    private static LogWindow logWindow;
 
     public static void main(String args[]) throws Exception
     {
-        mStatment = MsAccessDatabaseConnectionInJava8.fileNameFromMsAccess();
+//        mStatment = MsAccessDatabaseConnectionInJava8.fileNameFromMsAccess();
 
-        manualOCRDailyWorkSheet();
+        ScannedImageData.chooseWhatToOCR(mStatment);
 //        scanningDailyWorkSheets();
-
     }
 
-    private static void manualOCRDailyWorkSheet() {
+    private static void chooseWhatToOCR(Statement statement) {
         UI allUIFile = new UI();
-        File openIndividualImage = allUIFile.openImageInViewer(mStatment);
+        allUIFile.openComboBox(statement);
     }
 
-    private static void scanningDailyWorkSheets() {
-        List<String> listOfFileName = scanFolderAndGetAllDocumentName();
+    public static void scanningDailyWorkSheets(LogWindow logWindow, Statement mStatment) {
+        ScannedImageData.logWindow = logWindow;
 
-//        Statement statement = null;
+        List<String> listOfFileName = scanFolderAndGetAllDocumentName();
         try {
-            scanForDocumentNumber(listOfFileName, mStatment);
+            scanForDocumentNumber(listOfFileName, mStatment, logWindow);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private static void scanForDocumentNumber(List<String> listOfFileName, Statement statement) {
+    private static void scanForDocumentNumber(List<String> listOfFileName, Statement statement, LogWindow logWindow) {
 
         List<Integer> receiptNumberList = new ArrayList<>();
         int convertingToInt = 0;
@@ -85,22 +85,24 @@ public class ScannedImageData {
                 // and setting new scaling values
                 // that are later on used by RescaleOP
                 if (d >= -1.4211511E7 && d < -7254228) {
-                    processImg(ipimage, 3f, -10f, fileName, statement);
+                    processImg(ipimage, 3f, -10f, fileName, statement, logWindow);
                 } else if (d >= -7254228 && d < -2171170) {
-                    processImg(ipimage, 1.455f, -47f, fileName, statement);
+                    processImg(ipimage, 1.455f, -47f, fileName, statement, logWindow);
                 } else if (d >= -2171170 && d < -1907998) {
-                    processImg(ipimage, 1.35f, -10f, fileName, statement);
+                    processImg(ipimage, 1.35f, -10f, fileName, statement, logWindow);
                 } else if (d >= -1907998 && d < -257) {
-                    processImg(ipimage, 1.19f, 0.5f, fileName, statement);
+                    processImg(ipimage, 1.19f, 0.5f, fileName, statement, logWindow);
                 } else if (d >= -257 && d < -1) {
-                    processImg(ipimage, 1f, 0.5f, fileName, statement);
+                    processImg(ipimage, 1f, 0.5f, fileName, statement, logWindow);
                 } else if (d >= -1 && d < 2) {
-                    processImg(ipimage, 1f, 0.35f, fileName, statement);
+                    processImg(ipimage, 1f, 0.35f, fileName, statement, logWindow);
                 } else if (d >= -1.8380756E7 && d < -1.4211511E7) {
-                    processImg(ipimage, 3f, -10f, fileName, statement);
+                    processImg(ipimage, 3f, -10f, fileName, statement, logWindow);
                 } else {
-                    processImg(ipimage, 3f, -10f, fileName, statement);
+                    processImg(ipimage, 3f, -10f, fileName, statement, logWindow);
                 }
+                //TODO: Log here, saying program finished
+                logWindow.showInfoInLog("------------ OCR Scanning Finished ------------");
             }
         }
         catch (TesseractException | IOException e) {
@@ -109,7 +111,7 @@ public class ScannedImageData {
     }
 
     public static void processImg(BufferedImage ipimage, float scaleFactor, float offset,
-                                  String fileName, Statement statement) throws IOException, TesseractException  {
+                                  String fileName, Statement statement, LogWindow logWindow) throws IOException, TesseractException  {
         // Making an empty image buffer
         // to store image later
         // ipimage is an image buffer
@@ -162,10 +164,10 @@ public class ScannedImageData {
         }
 
         System.out.println(receiptNumber);
-        moveAndDeleteFile(fileName, receiptNumber, statement);
+        moveAndDeleteFile(fileName, receiptNumber, statement, logWindow);
     }
 
-    public static void moveAndDeleteFile(String fileName, String receiptNumber, Statement statement) {
+    public static void moveAndDeleteFile(String fileName, String receiptNumber, Statement statement, LogWindow logWindow) {
 
         // Giving the initial file path
         File file = new File(filePathObject.mInitialFilePath + "\\" + fileName);
@@ -174,13 +176,17 @@ public class ScannedImageData {
 //        String fileNameFromDb = "Kush";
         String fileNameFromDb = "";
         try {
-            fileNameFromDb = msAccessDB.sqlQueryToGetDataFromWorkSheet(Integer.parseInt(receiptNumber), statement);
+            fileNameFromDb = msAccessDB.sqlQueryToGetDataFromWorkSheet(Integer.parseInt(receiptNumber), statement, logWindow);
         } catch (NumberFormatException e) {
             System.out.println("ReceiptNumber : " + receiptNumber);
             System.out.println("FileName : " + fileName);
 
+            logWindow.showInfoInLog("ReceiptNumber : " + receiptNumber);
+            logWindow.showInfoInLog("FileName : " + fileName);
+
             if (file.renameTo(new File(filePathObject.mErrorFilePath + "\\" + fileName + ".jpg"))) {
                 System.out.println("Moved in Errored File.");
+                logWindow.showInfoInLog("Moved in Errored File.");
             }
             e.printStackTrace();
         }
@@ -207,8 +213,10 @@ public class ScannedImageData {
             //double random = Math.random() * 49 + 1;
             if (file.renameTo(new File(filePathObject.mErrorFilePath + "\\" + receiptNumber + ".jpg"))) {
                 System.out.println("Moved in Errored File.");
+                logWindow.showInfoInLog("Moved in Errored File.");
             }
             System.out.println("No Record found in Database.");
+            logWindow.showInfoInLog("No Record found in Database.");
         }
     }
 

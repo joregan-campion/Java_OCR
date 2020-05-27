@@ -1,6 +1,7 @@
 package main.java.database;
 
 import main.java.filePaths.FilePath;
+import main.java.main.LogWindow;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -66,7 +67,7 @@ public class MsAccessDatabaseConnectionInJava8 {
 			return statement;
 	}
 
-	public String sqlQueryToGetDataFromWorkSheet(int SheetRef, Statement statement) {
+	public String sqlQueryToGetDataFromWorkSheet(int SheetRef, Statement statement, LogWindow logWindow) {
 		// TODO Auto-generated method stub
 		ResultSet resultSet = null;
 		String fileName = "";
@@ -78,10 +79,7 @@ public class MsAccessDatabaseConnectionInJava8 {
 		
 			//processing returned data and printing into console
 			while(resultSet.next()) {
-				System.out.println("SheetDate -- " + resultSet.getDate("SheetDate"));
-				System.out.println("JobID -- " + resultSet.getInt("JobID"));
-				System.out.println("EmployeeRef -- " + resultSet.getInt("EmployeeRef"));
-				System.out.println("CustomerRef -- " + resultSet.getString("CustomerRef"));
+				loggingAllActivities(resultSet, logWindow);
 				fileName = resultSet.getDate("SheetDate") + "_" + resultSet.getInt("JobID")
 								+ "_" +  resultSet.getInt("EmployeeRef") + "_" + resultSet.getString("CustomerRef");
 			}
@@ -102,6 +100,18 @@ public class MsAccessDatabaseConnectionInJava8 {
 //			}
 //		}
 		return fileName;
+	}
+
+	private void loggingAllActivities(ResultSet resultSet, LogWindow logWindow) throws SQLException {
+		System.out.println("SheetDate -- " + resultSet.getDate("SheetDate"));
+		System.out.println("JobID -- " + resultSet.getInt("JobID"));
+		System.out.println("EmployeeRef -- " + resultSet.getInt("EmployeeRef"));
+		System.out.println("CustomerRef -- " + resultSet.getString("CustomerRef"));
+
+		logWindow.showInfoInLog("SheetDate -- " + resultSet.getDate("SheetDate"));
+		logWindow.showInfoInLog("JobID -- " + resultSet.getInt("JobID"));
+		logWindow.showInfoInLog("EmployeeRef -- " + resultSet.getInt("EmployeeRef"));
+		logWindow.showInfoInLog("CustomerRef -- " + resultSet.getString("CustomerRef"));
 	}
 
 
