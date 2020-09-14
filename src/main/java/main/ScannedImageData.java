@@ -28,15 +28,20 @@ import java.util.regex.Pattern;
 public class ScannedImageData {
 
     static FilePath filePathObject = new FilePath(true);   //true
-    private static Statement mStatment;
+//    private static ;
     private static LogWindow logWindow;
+    public static Statement mStatment;
 
     public static void main(String args[]) throws Exception
     {
-//        mStatment = MsAccessDatabaseConnectionInJava8.fileNameFromMsAccess();
+        /*Statement mStatment = null;
+        ScannedImageData.chooseWhatToOCR(mStatment);*/
+        mStatment = MsAccessDatabaseConnectionInJava8.fileNameFromMsAccess();
 
-        ScannedImageData.chooseWhatToOCR(mStatment);
-//        scanningDailyWorkSheets();
+        logWindow = new LogWindow("Manual OCR Scanning", 500,500);
+        logWindow.showInfoInLog("Scanning Database...");
+        scanningDailyWorkSheets(logWindow, mStatment);
+//        chooseWhatToOCR(mStatment);
     }
 
     private static void chooseWhatToOCR(Statement statement) {
@@ -46,6 +51,8 @@ public class ScannedImageData {
 
     public static void scanningDailyWorkSheets(LogWindow logWindow, Statement mStatment) {
         ScannedImageData.logWindow = logWindow;
+
+        logWindow.showInfoInLog("Scanning All files ... ");
 
         List<String> listOfFileName = scanFolderAndGetAllDocumentName();
         try {
@@ -63,6 +70,7 @@ public class ScannedImageData {
             for (String fileName : listOfFileName) {
 
                 File file = new File(filePathObject.mInitialFilePath + "\\" + fileName);
+                logWindow.showInfoInLog("-> " + fileName );
 
                 BufferedImage ipimage = ImageIO.read(file);
 
@@ -73,10 +81,9 @@ public class ScannedImageData {
                 // getting RGB content of the whole image file
                 double d = 0.0;
                 try {
-                    d = ipimage
-                                .getRGB(ipimage.getTileWidth() / 2,
+                    d = ipimage.getRGB(ipimage.getTileWidth() / 2,
                                         ipimage.getTileHeight() / 2);
-                } catch (NullPointerException e) {
+                } catch (Exception e) {  //NullPointerException
                     System.out.println("" + file.getName().toString());
                     e.printStackTrace();
                 }
@@ -105,13 +112,14 @@ public class ScannedImageData {
                 logWindow.showInfoInLog("------------ OCR Scanning Finished ------------");
             }
         }
-        catch (TesseractException | IOException e) {
+        catch (Exception e) {   //TesseractException | IOException |
             e.printStackTrace();
         }
     }
 
     public static void processImg(BufferedImage ipimage, float scaleFactor, float offset,
                                   String fileName, Statement statement, LogWindow logWindow) throws IOException, TesseractException  {
+        logWindow.showInfoInLog("Processing Image" );
         // Making an empty image buffer
         // to store image later
         // ipimage is an image buffer
@@ -152,6 +160,7 @@ public class ScannedImageData {
         Tesseract tesseract = new Tesseract();
         tesseract.setDatapath(filePathObject.languageDataPath);
 
+        logWindow.showInfoInLog("Doing OCR" );
         // doing OCR on the image
         // and storing result in string text
         String text = tesseract.doOCR(fopimage);
@@ -164,6 +173,7 @@ public class ScannedImageData {
         }
 
         System.out.println(receiptNumber);
+        logWindow.showInfoInLog(receiptNumber);
         moveAndDeleteFile(fileName, receiptNumber, statement, logWindow);
     }
 
@@ -171,6 +181,7 @@ public class ScannedImageData {
 
         // Giving the initial file path
         File file = new File(filePathObject.mInitialFilePath + "\\" + fileName);
+        logWindow.showInfoInLog("Moving file " + fileName);
 
         MsAccessDatabaseConnectionInJava8 msAccessDB = new MsAccessDatabaseConnectionInJava8();
 //        String fileNameFromDb = "Kush";
@@ -184,7 +195,7 @@ public class ScannedImageData {
             logWindow.showInfoInLog("ReceiptNumber : " + receiptNumber);
             logWindow.showInfoInLog("FileName : " + fileName);
 
-            if (file.renameTo(new File(filePathObject.mErrorFilePath + "\\" + fileName + ".jpg"))) {
+            if (file.renameTo(new File(filePathObject.mErrorFilePath + "\\" + receiptNumber + ".jpg"))) {
                 System.out.println("Moved in Errored File.");
                 logWindow.showInfoInLog("Moved in Errored File.");
             }
@@ -210,8 +221,8 @@ public class ScannedImageData {
                 e.printStackTrace();
             }
         } else {
-            //double random = Math.random() * 49 + 1;
-            if (file.renameTo(new File(filePathObject.mErrorFilePath + "\\" + receiptNumber + ".jpg"))) {
+            double random = Math.random() * 49 + 1;
+            if (file.renameTo(new File(filePathObject.mErrorFilePath + "\\" + receiptNumber + "_" + random + "_" + ".jpg"))) {
                 System.out.println("Moved in Errored File.");
                 logWindow.showInfoInLog("Moved in Errored File.");
             }

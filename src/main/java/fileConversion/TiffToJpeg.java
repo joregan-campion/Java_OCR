@@ -18,6 +18,20 @@ public class TiffToJpeg {
         List<String> listOfFileName = scanFolderAndGetAllDocumentName();
 
         convertTiffToJpeg(listOfFileName);
+
+//        convertJpegToTiff(listOfFileName);
+    }
+
+    private static void convertJpegToTiff(List<String> listOfFileName) {
+        for (String fileName : listOfFileName) {
+            final BufferedImage tif;
+            try {
+                tif = ImageIO.read(new File(mTiffFiles + "\\" + fileName));
+                ImageIO.write(tif, "jpg", new File(mJpegFiles + "\\" + fileName + ".tiff"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private static void convertTiffToJpeg(List<String> listOfFileName) {

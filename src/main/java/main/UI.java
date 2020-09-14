@@ -68,6 +68,7 @@ public class UI extends Component {
                            System.out.println("Service Engineer Sheet Selected");
                        } else if (e.getItem().toString().contains("Automatic") && e.getStateChange() == ItemEvent.SELECTED) {
                            System.out.println("Automatic Selected");
+                           logWindow.showInfoInLog("Automatic Selected");
                            ScannedImageData.scanningDailyWorkSheets(logWindow, mStatment);
                        }
                 jFrame.setVisible(false);
@@ -77,7 +78,7 @@ public class UI extends Component {
     }
 
     public void openImageInViewer(Statement statment) {
-        JFileChooser fileChooser = new JFileChooser(new File("C:\\Users\\kushal.mishra\\Dropbox (Campion Pumps)\\Campion Backup Folder (1)\\Scanned Documents\\Worksheets"));
+        JFileChooser fileChooser = new JFileChooser(new File("D:\\Dropbox\\Dropbox (Campion Pumps)\\Campion Backup Folder (1)\\Scanned Documents\\Worksheets\\Error while processing"));
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         int result = fileChooser.showOpenDialog(this);
         File selectedFile = null;

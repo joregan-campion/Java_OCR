@@ -29,15 +29,15 @@ public class FilePath {
 		mDatabaseLocation = "D:/OCR/ControlDataBase.mdb";
 
 		if (isProduction) {
-			mFilePath = "C:\\Users\\kushal.mishra\\Dropbox (Campion Pumps)\\Campion Backup Folder (1)\\Scanned Documents\\Worksheets\\Pre-Filing";
+			mFilePath = "D:\\Dropbox\\Dropbox (Campion Pumps)\\Campion Backup Folder (1)\\Scanned Documents\\Worksheets\\Pre-Filing";	//Pre-Filing
 
-			mInitialFilePath = "C:\\Users\\kushal.mishra\\Dropbox (Campion Pumps)\\Campion Backup Folder (1)\\Scanned Documents\\Worksheets\\Pre-Filing";
+			mInitialFilePath = "D:\\Dropbox\\Dropbox (Campion Pumps)\\Campion Backup Folder (1)\\Scanned Documents\\Worksheets\\Pre-Filing"; //Pre-Filing
 
-			mDestinationFilePath = "C:\\Users\\kushal.mishra\\Dropbox (Campion Pumps)\\Campion Backup Folder (1)\\Scanned Documents\\Worksheets\\Processing Documents";
+			mDestinationFilePath = "D:\\Dropbox\\Dropbox (Campion Pumps)\\Campion Backup Folder (1)\\Scanned Documents\\Worksheets\\Processing Documents";
 			
-			mErrorFilePath = "C:\\Users\\kushal.mishra\\Dropbox (Campion Pumps)\\Campion Backup Folder (1)\\Scanned Documents\\Worksheets\\Error while processing";
+			mErrorFilePath = "D:\\Dropbox\\Dropbox (Campion Pumps)\\Campion Backup Folder (1)\\Scanned Documents\\Worksheets\\Error while processing";
 
-			mNoRecordInDatabase = "C:\\Users\\kushal.mishra\\Dropbox (Campion Pumps)\\Campion Backup Folder (1)\\Scanned Documents\\Worksheets\\No Record In Database";
+			mNoRecordInDatabase = "D:\\Dropbox\\Dropbox (Campion Pumps)\\Campion Backup Folder (1)\\Scanned Documents\\Worksheets\\No Record In Database";
 
 		} else {
 			mFilePath = "D:/OCR/InitialFolder";
