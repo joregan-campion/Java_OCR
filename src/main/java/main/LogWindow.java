@@ -32,4 +32,8 @@ public class LogWindow extends JFrame {
         jTextArea.append(data + "\n");
         this.getContentPane().validate();
     }
+
+    public void closeLogWindow() {
+        dispose();
+    }
 }

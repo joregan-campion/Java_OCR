@@ -18,9 +18,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,15 +31,38 @@ public class ScannedImageData {
     private static LogWindow logWindow;
     public static Statement mStatment;
 
-    public static void main(String args[]) throws Exception
+    public static void main(String[] args) throws Exception
     {
         /*Statement mStatment = null;
         ScannedImageData.chooseWhatToOCR(mStatment);*/
-        mStatment = MsAccessDatabaseConnectionInJava8.fileNameFromMsAccess();
 
+        Timer timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+
+                logWindow = new LogWindow("Manual OCR Scanning", 500,500);
+                logWindow.showInfoInLog("Copying Database...");
+                logWindow.showInfoInLog("Scanning Database...");
+
+//                new CopyDatabaseForProcessing();
+
+                mStatment = MsAccessDatabaseConnectionInJava8.fileNameFromMsAccess();
+
+                scanningDailyWorkSheets(logWindow, mStatment);
+            }
+        };
+        timer.schedule(timerTask,1000, 1000 * 86400 );
+
+       /*
+       // Original Code
+       mStatment = MsAccessDatabaseConnectionInJava8.fileNameFromMsAccess();
+2
         logWindow = new LogWindow("Manual OCR Scanning", 500,500);
         logWindow.showInfoInLog("Scanning Database...");
-        scanningDailyWorkSheets(logWindow, mStatment);
+        scanningDailyWorkSheets(logWindow, mStatment);*/
+
+
 //        chooseWhatToOCR(mStatment);
     }
 
@@ -111,6 +133,7 @@ public class ScannedImageData {
                 //TODO: Log here, saying program finished
                 logWindow.showInfoInLog("------------ OCR Scanning Finished ------------");
             }
+            logWindow.closeLogWindow();
         }
         catch (Exception e) {   //TesseractException | IOException |
             e.printStackTrace();

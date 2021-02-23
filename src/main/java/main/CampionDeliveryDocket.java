@@ -1,8 +1,6 @@
 package main.java.main;
 
-import main.java.database.MsAccessDatabaseConnectionInJava8;
 import main.java.filePaths.DeliveryDocketFilePath;
-import main.java.filePaths.FilePath;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
 
@@ -18,7 +16,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;

@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="commons-logging-1.2-javadoc">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../External Libraries/MSAccessJar/commons-logging-1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../External Libraries/MSAccessJar/hsqldb.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../External Libraries/MSAccessJar/jackcess-3.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../External Libraries/MSAccessJar/sqltool.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../External Libraries/MSAccessJar/ucanaccess-5.0.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../../External Libraries/MSAccessJar/commons-logging-1.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>
