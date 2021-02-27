@@ -45,7 +45,7 @@ public class ScannedImageData {
                 logWindow.showInfoInLog("Copying Database...");
                 logWindow.showInfoInLog("Scanning Database...");
 
-//                new CopyDatabaseForProcessing();
+                new CopyDatabaseForProcessing();
 
                 mStatment = MsAccessDatabaseConnectionInJava8.fileNameFromMsAccess();
 
