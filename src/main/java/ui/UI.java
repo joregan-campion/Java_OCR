@@ -1,7 +1,9 @@
-package main.java.main;
+package main.java.ui;
 
 import main.java.database.MsAccessDatabaseConnectionInJava8;
-import main.java.filePaths.FilePath;
+import main.java.filePaths.JobSheetFilePath;
+import main.java.main.LogWindow;
+import main.java.main.ScannedImageData;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
@@ -141,7 +143,7 @@ public class UI extends Component {
     }
 
     private void moveAndDeleteFileFromUI(String fileName, File mSelectedFile, String receiptNumber, Statement statement) {
-        FilePath filePathObject = new FilePath(true);
+        JobSheetFilePath filePathObject = new JobSheetFilePath(true);
         File file = mSelectedFile;
 
         MsAccessDatabaseConnectionInJava8 msAccessDB = new MsAccessDatabaseConnectionInJava8();

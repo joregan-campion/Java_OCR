@@ -1,4 +1,4 @@
-package main.java.main;
+package main.java.featureTesting;
 
 import com.dropbox.core.DbxException;
 import com.dropbox.core.DbxRequestConfig;

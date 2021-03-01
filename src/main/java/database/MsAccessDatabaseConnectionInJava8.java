@@ -1,6 +1,6 @@
 package main.java.database;
 
-import main.java.filePaths.FilePath;
+import main.java.filePaths.JobSheetFilePath;
 import main.java.main.LogWindow;
 
 import java.sql.*;
@@ -8,7 +8,7 @@ import java.sql.*;
 
 public class MsAccessDatabaseConnectionInJava8 {
 	
-	static FilePath filePathObject = new FilePath(false);
+	static JobSheetFilePath filePathObject = new JobSheetFilePath(false);
 
 	public static void main(String[] args) {
 		

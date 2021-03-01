@@ -1,4 +1,4 @@
-package main.java.main;
+package main.java.featureTesting;
 
 import net.sourceforge.tess4j.ITessAPI.TessBaseAPI;
 

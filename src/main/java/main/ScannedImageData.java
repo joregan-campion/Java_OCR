@@ -1,7 +1,8 @@
 package main.java.main;
 
 import main.java.database.MsAccessDatabaseConnectionInJava8;
-import main.java.filePaths.FilePath;
+import main.java.filePaths.JobSheetFilePath;
+import main.java.ui.UI;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
 
@@ -26,8 +27,7 @@ import java.util.regex.Pattern;
 //    https://www.geeksforgeeks.org/tesseract-ocr-with-java-with-examples/
 public class ScannedImageData {
 
-    static FilePath filePathObject = new FilePath(true);   //true
-//    private static ;
+    static JobSheetFilePath filePathObject = new JobSheetFilePath(true);   //true
     private static LogWindow logWindow;
     public static Statement mStatment;
 
@@ -52,7 +52,9 @@ public class ScannedImageData {
                 scanningDailyWorkSheets(logWindow, mStatment);
             }
         };
-        timer.schedule(timerTask,1000, 1000 * 86400 );
+        /* OLD TIMER */
+//        timer.schedule(timerTask,1000, 1000 * 86400 );
+        timer.schedule(timerTask,0l, 1000 * 60 * 60 );
 
        /*
        // Original Code
@@ -104,7 +106,7 @@ public class ScannedImageData {
                 double d = 0.0;
                 try {
                     d = ipimage.getRGB(ipimage.getTileWidth() / 2,
-                                        ipimage.getTileHeight() / 2);
+                            ipimage.getTileHeight() / 2);
                 } catch (Exception e) {  //NullPointerException
                     System.out.println("" + file.getName().toString());
                     e.printStackTrace();

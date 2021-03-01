@@ -1,6 +1,6 @@
 package main.java.filePaths;
 
-public class FilePath {
+public class JobSheetFilePath {
 
 	public  String mNoRecordInDatabase;
 
@@ -20,7 +20,7 @@ public class FilePath {
 
 	public String languageDataPath;
 
-	public FilePath(boolean isProduction) {
+	public JobSheetFilePath(boolean isProduction) {
 		
 		dataPath = "D:/OCR";
 

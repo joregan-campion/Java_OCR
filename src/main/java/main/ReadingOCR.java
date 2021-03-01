@@ -1,7 +1,7 @@
 package main.java.main;
 
 import main.java.database.MsAccessDatabaseConnectionInJava8;
-import main.java.filePaths.FilePath;
+import main.java.filePaths.JobSheetFilePath;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
 
@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 public class ReadingOCR {
 
 
-	static FilePath filePathObject = new FilePath(false);
+	static JobSheetFilePath filePathObject = new JobSheetFilePath(false);
 
 	static MsAccessDatabaseConnectionInJava8 msAccessDB = new MsAccessDatabaseConnectionInJava8();
 
