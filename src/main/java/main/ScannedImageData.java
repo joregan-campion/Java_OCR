@@ -24,10 +24,15 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-//    https://www.geeksforgeeks.org/tesseract-ocr-with-java-with-examples/
+
 public class ScannedImageData {
 
-    static JobSheetFilePath filePathObject = new JobSheetFilePath(true);   //true
+    /* To decide the file paths are for production or testing
+    * true -> Prod
+    *  false -> testing
+    * */
+    static JobSheetFilePath filePathObject = new JobSheetFilePath(true);
+
     private static LogWindow logWindow;
     public static Statement mStatment;
 
@@ -54,6 +59,8 @@ public class ScannedImageData {
         };
         /* OLD TIMER */
 //        timer.schedule(timerTask,1000, 1000 * 86400 );
+
+        /* New Timer should run every hour */
         timer.schedule(timerTask,0l, 1000 * 60 * 60 );
 
        /*
@@ -102,11 +109,17 @@ public class ScannedImageData {
                     continue;
                 }
 
+                /* Some of the images casuing NPE */
+                if (ipimage == null) {
+                    continue;
+                }
+
                 // getting RGB content of the whole image file
                 double d = 0.0;
+                int xCod = ipimage.getTileWidth() / 2;
+                int yCod = ipimage.getTileHeight() / 2;
                 try {
-                    d = ipimage.getRGB(ipimage.getTileWidth() / 2,
-                            ipimage.getTileHeight() / 2);
+                    d = ipimage.getRGB(xCod, yCod);
                 } catch (Exception e) {  //NullPointerException
                     System.out.println("" + file.getName().toString());
                     e.printStackTrace();
