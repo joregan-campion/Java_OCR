@@ -18,6 +18,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.Statement;
 import java.util.List;
 import java.util.*;
@@ -28,9 +31,9 @@ import java.util.regex.Pattern;
 public class ScannedImageData {
 
     /* To decide the file paths are for production or testing
-    * true -> Prod
-    *  false -> testing
-    * */
+     * true -> Prod
+     *  false -> testing
+     * */
     static JobSheetFilePath filePathObject = new JobSheetFilePath(true);
 
     private static LogWindow logWindow;
@@ -111,6 +114,8 @@ public class ScannedImageData {
 
                 /* Some of the images casuing NPE */
                 if (ipimage == null) {
+                    //TODO: Move the file to NPE folder
+                    moveNPEFiles(fileName);
                     continue;
                 }
 
@@ -213,6 +218,18 @@ public class ScannedImageData {
         System.out.println(receiptNumber);
         logWindow.showInfoInLog(receiptNumber);
         moveAndDeleteFile(fileName, receiptNumber, statement, logWindow);
+    }
+
+    private static void moveNPEFiles(String fileName) {
+        // Giving the initial file path
+        logWindow.showInfoInLog("Moving file " + fileName);
+        try {
+            Files.move(Paths.get(filePathObject.mInitialFilePath + "\\" + fileName),
+                    Paths.get(filePathObject.mNPEFilePath + "\\" + fileName + ".tiff"),
+                    StandardCopyOption.ATOMIC_MOVE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void moveAndDeleteFile(String fileName, String receiptNumber, Statement statement, LogWindow logWindow) {

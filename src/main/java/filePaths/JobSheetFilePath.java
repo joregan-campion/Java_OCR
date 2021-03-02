@@ -2,6 +2,8 @@ package main.java.filePaths;
 
 public class JobSheetFilePath {
 
+	public String mNPEFilePath;
+
 	public  String mNoRecordInDatabase;
 
 	public String dataPath;
@@ -34,12 +36,15 @@ public class JobSheetFilePath {
 			mInitialFilePath = "D:\\Dropbox\\Dropbox (Campion Pumps)\\Campion Backup Folder (1)\\Scanned Documents\\Worksheets\\Pre-Filing"; //Pre-Filing
 
 			mDestinationFilePath = "D:\\Dropbox\\Dropbox (Campion Pumps)\\Campion Backup Folder (1)\\Scanned Documents\\Worksheets\\Processed_doc_after_24_02_21";
-			
+
+			mNPEFilePath = "D:\\Dropbox\\Dropbox (Campion Pumps)\\Campion Backup Folder (1)\\Scanned Documents\\Worksheets\\FileCausingNPE";
+
 			mErrorFilePath = "D:\\Dropbox\\Dropbox (Campion Pumps)\\Campion Backup Folder (1)\\Scanned Documents\\Worksheets\\Error while processing";
 
 			mNoRecordInDatabase = "D:\\Dropbox\\Dropbox (Campion Pumps)\\Campion Backup Folder (1)\\Scanned Documents\\Worksheets\\No Record In Database";
 
 		} else {
+			/* Give NPE fake location */
 			mFilePath = "D:/OCR/InitialFolder";
 			
 			mInitialFilePath = "D:\\OCR\\InitialFolder";
